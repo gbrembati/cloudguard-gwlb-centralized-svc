@@ -1,6 +1,7 @@
 # CloudGuard GWLB Deployment on AWS
 This Terraform project is intended to be used as a template in a demonstration or to build a test environment.  
-What it does is creates an infrastructure composed of application VPCs, Shared Services VPC, Transit Gateway, and protect them with an auto-scaling group of CloudGuard gateways by using the newly AWS GWLB service.    These applications will have then the East-West and Outgoing traffic protected by CloudGuard Instances.    
+What it does is creates an infrastructure composed of application VPCs, Shared Services VPC, Transit Gateway, and protect them with an auto-scaling group of CloudGuard gateways by using the newly AWS GWLB service.    
+These applications will have then the East-West and Outgoing traffic protected by CloudGuard Instances.    
 
 ## Do you want to see more?    
 The following diagram is based on the Architecture N°2 design of Check Point GWLB in AWS.    
@@ -19,13 +20,13 @@ The project creates the following resources and combines them:
 9. **VPC Endpoints and host registration**: Used to access EC2 / ECR / RDS / CloudFormation services privately
 
 ## How to use it
-The only thing that you need to do is change the __*terraform.tfvars*__ file located in this directory.
+The only thing that you need to do is change **<values>** the __*terraform.tfvars*__ file located in this directory.
 
 ```hcl
 // --- Provider Settings ---
-region      = "xx-xxxx-x" 
-access_key  = "xxxxxxxxxxxxxxx"
-secret_key  = "xxxxxxxxxxxxxxx"
+region      = "<aws-region>" 
+access_key  = "<aws-access-key>"
+secret_key  = "<aws-secret-key>"
 
 // --- Networking Settings ---
 vpc_cidr = "10.250.0.0/16"
@@ -75,7 +76,7 @@ gateway_instance_type = "c6i.large"
 minimum_group_size    = 3
 maximum_group_size    = 4
 gateway_version       = "R80.40-BYOL"
-gateway_password_hash = "<openssl-created-pwd-hash>"    // openssl passwd -6 "password"
+gateway_password_hash = "<openssl-created-pwd-hash>"    // obtained via : openssl passwd -6 "password"
 gateway_SICKey        = "CheckpointPOC2022"
 enable_cloudwatch     = true
 gateways_provision_address_type = "private"
@@ -84,7 +85,7 @@ gateways_provision_address_type = "private"
 management_deploy         = true
 management_instance_type  = "m6i.xlarge"
 management_version        = "R81.10-BYOL"
-management_password_hash  = "<openssl-created-pwd-hash>"    // openssl passwd -6 "password"
+management_password_hash  = "<openssl-created-pwd-hash>"    // obtained via : openssl passwd -6 "password"
 gateways_policy           = "Standard"
 gateway_management        = "Locally managed"
 admin_cidr                = "0.0.0.0/0"
