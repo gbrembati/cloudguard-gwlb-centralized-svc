@@ -208,15 +208,15 @@ resource "aws_route_table" "nat_gw_subnet3_rtb" {
   }
     route{
     cidr_block = "10.0.0.0/0"
-    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint3.id
+    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint3[0].id
   }
   route{
     cidr_block = "172.16.0.0/12"
-    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint3.id
+    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint3[0].id
   }
   route{
     cidr_block = "192.168.0.0/16"
-    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint3.id
+    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint3[0].id
   }
   tags = {
     Name = "rt-net-chkp-nat-3"
@@ -248,15 +248,15 @@ resource "aws_route_table" "nat_gw_subnet4_rtb" {
   }
     route{
     cidr_block = "10.0.0.0/0"
-    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint4.id
+    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint4[0].id
   }
   route{
     cidr_block = "172.16.0.0/12"
-    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint4.id
+    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint4[0].id
   }
   route{
     cidr_block = "192.168.0.0/16"
-    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint4.id
+    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint4[0].id
   }
   tags = {
     Name = "rt-net-chkp-nat-4"
