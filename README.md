@@ -1,16 +1,16 @@
 # CloudGuard GWLB Deployment on AWS
 This Terraform project is intended to be used as a template in a demonstration or to build a test environment.  
-What it does is creating an infrastructure composed of application VPCs, Shared Services VPC, Transit Gateway, and protect them with an auto-scaling group of CloudGuard gateways by using the newly AWS GWLB service.    These applications will have then the East-West and Outgoiung traffic protected by a CloudGuard Instances.    
+What it does is creates an infrastructure composed of application VPCs, Shared Services VPC, Transit Gateway, and protect them with an auto-scaling group of CloudGuard gateways by using the newly AWS GWLB service.    These applications will have then the East-West and Outgoing traffic protected by CloudGuard Instances.    
 
 ## Do you want to see more?    
-The following diagram is based on Architecture N°2 design of Check Point GWLB in AWS. [CHKP/Documentation](https://supportcenter.checkpoint.com/supportcenter/portal?eventSubmit_doGoviewsolutiondetails=&solutionid=sk174447&partition=Basic&product=CloudGuard#Security%20VPC%20+%20TGW) & [CHKP/Admin Guide](https://sc1.checkpoint.com/documents/IaaS/WebAdminGuides/EN/CP_CloudGuard_Network_for_AWS_Gateway_Load_Balancer_Security_VPC_for_Transit_Gateway/Content/Topics-AWS-GWLB-VPC-TGW-DG/Introduction.htm)    
-Check out other CloudGuard examples at [Github/gbrembati](https://github.com/gbrembati/)
+The following diagram is based on the Architecture N°2 design of Check Point GWLB in AWS.    
+Learn more at [CHKP/Documentation](https://supportcenter.checkpoint.com/supportcenter/portal?eventSubmit_doGoviewsolutiondetails=&solutionid=sk174447&partition=Basic&product=CloudGuard#Security%20VPC%20+%20TGW) & [CHKP/Admin Guide](https://sc1.checkpoint.com/documents/IaaS/WebAdminGuides/EN/CP_CloudGuard_Network_for_AWS_Gateway_Load_Balancer_Security_VPC_for_Transit_Gateway/Content/Topics-AWS-GWLB-VPC-TGW-DG/Introduction.htm)
 
 ## Which are the components created?
-The project creates the following resources and combine them:
+The project creates the following resources and combines them:
 1. **Spokes VPCs**: Application VPCs with testing EC2s 
-2. **Service VPC**: Single VPC containing to host VPC Endpoints
-3. **Security VPC**: Single VPC containing to host the CloudGuard gateways ASG
+2. **Service VPC**: Single VPC dedicated to host VPC Endpoints
+3. **Security VPC**: Single VPC dedicated to host the CloudGuard gateways ASG
 4. **Transit Gateway**: Transit Gateway to connect the different VPCs
 5. **Transit Gateway Config**: Transit gateway attachments, and routing configuration
 6. **GWLB Service**: In the security VPC with its endpoint
@@ -19,7 +19,7 @@ The project creates the following resources and combine them:
 9. **VPC Endpoints and host registration**: Used to access EC2 / ECR and S3 services privately
 
 ## How to use it
-The only thing that you need to do is changing the __*terraform.tfvars*__ file located in this directory.
+The only thing that you need to do is change the __*terraform.tfvars*__ file located in this directory.
 
 ```hcl
 // --- Provider Settings ---
@@ -91,7 +91,7 @@ admin_cidr                = "0.0.0.0/0"
 gateways_addresses        = "0.0.0.0/0"
 ```
 If you want (or need) to further customize other project details, you can change defaults in the different __*name-variables.tf*__ files.   
-Here you will also able to find the descriptions that explains what each variable is used for.
+Here you will also be able to find the descriptions that explain what each variable is used for.
 
-## The infrastruction created with the following design:
+## The infrastructure was created with the following design:
 ![Architectural Design](/zimages/gwlb-centralized-design.jpg)
