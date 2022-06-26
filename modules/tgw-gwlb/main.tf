@@ -130,7 +130,7 @@ resource "aws_route_table" "nat_gw_subnet1_rtb" {
     gateway_id = var.internet_gateway_id
   }
   route{
-    cidr_block = "10.0.0.0/0"
+    cidr_block = "10.0.0.0/8"
     vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint1.id
   }
   route{
@@ -168,7 +168,7 @@ resource "aws_route_table" "nat_gw_subnet2_rtb" {
     gateway_id = var.internet_gateway_id
   }
     route{
-    cidr_block = "10.0.0.0/0"
+    cidr_block = "10.0.0.0/8"
     vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint2.id
   }
   route{
@@ -207,7 +207,7 @@ resource "aws_route_table" "nat_gw_subnet3_rtb" {
     gateway_id = var.internet_gateway_id
   }
     route{
-    cidr_block = "10.0.0.0/0"
+    cidr_block = "10.0.0.0/8"
     vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint3[0].id
   }
   route{
@@ -247,7 +247,7 @@ resource "aws_route_table" "nat_gw_subnet4_rtb" {
     gateway_id = var.internet_gateway_id
   }
     route{
-    cidr_block = "10.0.0.0/0"
+    cidr_block = "10.0.0.0/8"
     vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint4[0].id
   }
   route{
