@@ -110,4 +110,50 @@ module "tgw-gwlb"{
   volume_type = var.volume_type
 }
 
+resource "aws_route" "tgw_attachment1_rtb_classA" {
+  route_table_id          = module.tgw-gwlb.tgw_subnet1_rtb
+  destination_cidr_block  = "10.0.0.0/8"
+  transit_gateway_id      = aws_ec2_transit_gateway.tgw-central.id
+}
+resource "aws_route" "tgw_attachment1_rtb_classB" {
+  route_table_id          = module.tgw-gwlb.tgw_subnet1_rtb
+  destination_cidr_block  = "172.16.0.0/12"
+  transit_gateway_id      = aws_ec2_transit_gateway.tgw-central.id
+}
+resource "aws_route" "tgw_attachment1_rtb_classC" {
+  route_table_id          = module.tgw-gwlb.tgw_subnet1_rtb
+  destination_cidr_block  = "192.168.0.0/16"
+  transit_gateway_id      = aws_ec2_transit_gateway.tgw-central.id
+}
 
+resource "aws_route" "tgw_attachment2_rtb_classA" {
+  route_table_id          = module.tgw-gwlb.tgw_subnet2_rtb
+  destination_cidr_block  = "10.0.0.0/8"
+  transit_gateway_id      = aws_ec2_transit_gateway.tgw-central.id
+}
+resource "aws_route" "tgw_attachment2_rtb_classB" {
+  route_table_id          = module.tgw-gwlb.tgw_subnet2_rtb
+  destination_cidr_block  = "172.16.0.0/12"
+  transit_gateway_id      = aws_ec2_transit_gateway.tgw-central.id
+}
+resource "aws_route" "tgw_attachment2_rtb_classC" {
+  route_table_id          = module.tgw-gwlb.tgw_subnet2_rtb
+  destination_cidr_block  = "192.168.0.0/16"
+  transit_gateway_id      = aws_ec2_transit_gateway.tgw-central.id
+}
+
+resource "aws_route" "tgw_attachment3_rtb_classA" {
+  route_table_id          = module.tgw-gwlb.tgw_subnet3_rtb
+  destination_cidr_block  = "10.0.0.0/8"
+  transit_gateway_id      = aws_ec2_transit_gateway.tgw-central.id
+}
+resource "aws_route" "tgw_attachment3_rtb_classB" {
+  route_table_id          = module.tgw-gwlb.tgw_subnet3_rtb
+  destination_cidr_block  = "172.16.0.0/12"
+  transit_gateway_id      = aws_ec2_transit_gateway.tgw-central.id
+}
+resource "aws_route" "tgw_attachment3_rtb_classC" {
+  route_table_id          = module.tgw-gwlb.tgw_subnet3_rtb
+  destination_cidr_block  = "192.168.0.0/16"
+  transit_gateway_id      = aws_ec2_transit_gateway.tgw-central.id
+}
