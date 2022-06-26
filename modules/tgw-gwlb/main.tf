@@ -129,6 +129,19 @@ resource "aws_route_table" "nat_gw_subnet1_rtb" {
     cidr_block = "0.0.0.0/0"
     gateway_id = var.internet_gateway_id
   }
+  route{
+    cidr_block = "10.0.0.0/0"
+    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint1.id
+  }
+  route{
+    cidr_block = "172.16.0.0/12"
+    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint1.id
+  }
+  route{
+    cidr_block = "192.168.0.0/16"
+    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint1.id
+  }
+
   tags = {
     Name = "rt-net-chkp-nat-1"
     Network = "Public"
@@ -153,6 +166,18 @@ resource "aws_route_table" "nat_gw_subnet2_rtb" {
   route{
     cidr_block = "0.0.0.0/0"
     gateway_id = var.internet_gateway_id
+  }
+    route{
+    cidr_block = "10.0.0.0/0"
+    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint2.id
+  }
+  route{
+    cidr_block = "172.16.0.0/12"
+    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint2.id
+  }
+  route{
+    cidr_block = "192.168.0.0/16"
+    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint2.id
   }
   tags = {
     Name = "rt-net-chkp-nat-2"
@@ -181,6 +206,18 @@ resource "aws_route_table" "nat_gw_subnet3_rtb" {
     cidr_block = "0.0.0.0/0"
     gateway_id = var.internet_gateway_id
   }
+    route{
+    cidr_block = "10.0.0.0/0"
+    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint3.id
+  }
+  route{
+    cidr_block = "172.16.0.0/12"
+    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint3.id
+  }
+  route{
+    cidr_block = "192.168.0.0/16"
+    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint3.id
+  }
   tags = {
     Name = "rt-net-chkp-nat-3"
     Network = "Public"
@@ -208,6 +245,18 @@ resource "aws_route_table" "nat_gw_subnet4_rtb" {
   route{
     cidr_block = "0.0.0.0/0"
     gateway_id = var.internet_gateway_id
+  }
+    route{
+    cidr_block = "10.0.0.0/0"
+    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint4.id
+  }
+  route{
+    cidr_block = "172.16.0.0/12"
+    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint4.id
+  }
+  route{
+    cidr_block = "192.168.0.0/16"
+    vpc_endpoint_id = aws_vpc_endpoint.gwlb_endpoint4.id
   }
   tags = {
     Name = "rt-net-chkp-nat-4"
@@ -275,7 +324,7 @@ resource "aws_vpc_endpoint" "gwlb_endpoint1" {
   service_name = module.gwlb.gwlb_service_name
   subnet_ids = aws_subnet.gwlbe_subnet1[*].id
   tags = {
-    "Name" = "ggwlb-chkp-endpoint-1"
+    "Name" = "gwlb-chkp-endpoint-1"
   }
 }
 resource "aws_vpc_endpoint" "gwlb_endpoint2" {
