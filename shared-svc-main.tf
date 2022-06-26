@@ -164,9 +164,9 @@ resource "aws_route_table_association" "rt-for-trust-shared-svc-b" {
   route_table_id = aws_route_table.rt-net-to-internal-scope.id
 } 
 
-resource "aws_vpc_endpoint" "shared-svc-vpce-s3" {
+resource "aws_vpc_endpoint" "shared-svc-vpce-rds" {
   vpc_id            = aws_vpc.vpc-shared-svc.id
-  service_name      = "com.amazonaws.eu-west-1.s3"
+  service_name      = "com.amazonaws.eu-west-1.rds"
   vpc_endpoint_type = "Interface"
   
   private_dns_enabled = false
@@ -174,7 +174,21 @@ resource "aws_vpc_endpoint" "shared-svc-vpce-s3" {
   subnet_ids = [ aws_subnet.net-trust-shared-svc-a.id, aws_subnet.net-trust-shared-svc-b.id]
 
   tags = {
-    Name = "vpce-${var.shared-svc[0]}-s3"
+    Name = "vpce-${var.shared-svc[0]}-rds"
+    "Resource Group" = "rg-${var.shared-svc[0]}"
+  }
+}
+resource "aws_vpc_endpoint" "shared-svc-vpce-rds-data" {
+  vpc_id            = aws_vpc.vpc-shared-svc.id
+  service_name      = "com.amazonaws.eu-west-1.rds-data"
+  vpc_endpoint_type = "Interface"
+  
+  private_dns_enabled = false
+  security_group_ids = [ aws_security_group.svc-allow-all.id ]
+  subnet_ids = [ aws_subnet.net-trust-shared-svc-a.id, aws_subnet.net-trust-shared-svc-b.id]
+
+  tags = {
+    Name = "vpce-${var.shared-svc[0]}-rds-data"
     "Resource Group" = "rg-${var.shared-svc[0]}"
   }
 }
@@ -193,6 +207,22 @@ resource "aws_vpc_endpoint" "shared-svc-vpce-ec2" {
     "Resource Group" = "rg-${var.shared-svc[0]}"
   }
 }
+
+resource "aws_vpc_endpoint" "shared-svc-vpce-cloudformation" {
+  vpc_id            = aws_vpc.vpc-shared-svc.id
+  service_name      = "com.amazonaws.eu-west-1.cloudformation"
+  vpc_endpoint_type = "Interface"
+  
+  private_dns_enabled = false
+  security_group_ids = [ aws_security_group.svc-allow-all.id ]
+  subnet_ids = [ aws_subnet.net-trust-shared-svc-a.id, aws_subnet.net-trust-shared-svc-b.id]
+
+  tags = {
+    Name = "vpce-${var.shared-svc[0]}-cloudformation"
+    "Resource Group" = "rg-${var.shared-svc[0]}"
+  }
+}
+
 
 resource "aws_vpc_endpoint" "shared-svc-vpce-ecr-api" {
   vpc_id            = aws_vpc.vpc-shared-svc.id
@@ -217,14 +247,26 @@ resource "aws_route53_zone" "private-ireland-zone" {
   }
 }
 
-resource "aws_route53_record" "host-s3-endpoint" {
+resource "aws_route53_record" "host-rds-endpoint" {
   zone_id = aws_route53_zone.private-ireland-zone.zone_id
-  name    = "s3.${aws_route53_zone.private-ireland-zone.name}"
+  name    = "rds.${aws_route53_zone.private-ireland-zone.name}"
   type    = "A"
 
   alias {
-    name    = aws_vpc_endpoint.shared-svc-vpce-s3.dns_entry[0].dns_name
-    zone_id = aws_vpc_endpoint.shared-svc-vpce-s3.dns_entry[0].hosted_zone_id
+    name    = aws_vpc_endpoint.shared-svc-vpce-rds.dns_entry[0].dns_name
+    zone_id = aws_vpc_endpoint.shared-svc-vpce-rds.dns_entry[0].hosted_zone_id
+    evaluate_target_health = true
+  }
+} 
+
+resource "aws_route53_record" "host-rds-data-endpoint" {
+  zone_id = aws_route53_zone.private-ireland-zone.zone_id
+  name    = "rds-data.${aws_route53_zone.private-ireland-zone.name}"
+  type    = "A"
+
+  alias {
+    name    = aws_vpc_endpoint.shared-svc-vpce-rds-data.dns_entry[0].dns_name
+    zone_id = aws_vpc_endpoint.shared-svc-vpce-rds-data.dns_entry[0].hosted_zone_id
     evaluate_target_health = true
   }
 } 
@@ -252,3 +294,15 @@ resource "aws_route53_record" "host-ecr-api-endpoint" {
     evaluate_target_health = true
   }
 } 
+
+resource "aws_route53_record" "host-cloudformation-endpoint" {
+  zone_id = aws_route53_zone.private-ireland-zone.zone_id
+  name    = "cloudformation.${aws_route53_zone.private-ireland-zone.name}"
+  type    = "A"
+
+  alias {
+    name    = aws_vpc_endpoint.shared-svc-vpce-cloudformation.dns_entry[0].dns_name
+    zone_id = aws_vpc_endpoint.shared-svc-vpce-cloudformation.dns_entry[0].hosted_zone_id
+    evaluate_target_health = true
+  }
+}

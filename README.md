@@ -16,7 +16,7 @@ The project creates the following resources and combines them:
 6. **GWLB Service**: In the security VPC with its endpoint
 7. **GWLB Auto-Scaling Group**: Attached to the GWLB service to provide security enforcement
 8. **Private Route53 Zone**: Used to share VPC Endpoints hosted in the Service VPC
-9. **VPC Endpoints and host registration**: Used to access EC2 / ECR and S3 services privately
+9. **VPC Endpoints and host registration**: Used to access EC2 / ECR / RDS / CloudFormation services privately
 
 ## How to use it
 The only thing that you need to do is change the __*terraform.tfvars*__ file located in this directory.
