@@ -50,7 +50,7 @@ gateway_name          = "<chkp-gwlb-gw-name>"
 gateway_instance_type = "c6i.large"
 minimum_group_size    = 3
 maximum_group_size    = 4
-gateway_version       = "R80.40-BYOL"
+gateway_version       = "R81.20-BYOL"                   // "R80.40-BYOL" | "R81.20-BYOL"
 gateway_password_hash = "<openssl-created-pwd-hash>"    // openssl passwd -6 "password"
 gateway_SICKey        = "CheckpointPOC2022"
 enable_cloudwatch     = true
@@ -59,7 +59,7 @@ gateways_provision_address_type = "private"
 // --- Check Point CloudGuard IaaS Security Management Server Configuration ---
 management_deploy         = true
 management_instance_type  = "m6i.xlarge"
-management_version        = "R81.10-BYOL"
+management_version        = "R81.20-BYOL"                   // "R81.10-BYOL" | "R81.20-BYOL"         
 management_password_hash  = "<openssl-created-pwd-hash>"    // openssl passwd -6 "password"
 gateways_policy           = "Standard"
 gateway_management        = "Locally managed"

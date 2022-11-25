@@ -1,10 +1,3 @@
-/*
-provider "aws" { 
-   region = var.region
-   access_key = var.access_key
-   secret_key = var.secret_key
-} */
-
 resource "aws_subnet" "gwlbe_subnet1" {
   vpc_id = var.vpc_id
   availability_zone = element(var.availability_zones, 0)
@@ -271,7 +264,7 @@ resource "aws_route_table_association" "nat_gw_subnet4_rtb_assoc" {
 
 module "gwlb" {
   source = "../gwlb"
-    providers = {
+  providers = {
     aws = aws
   }
   vpc_id = var.vpc_id
@@ -282,6 +275,7 @@ module "gwlb" {
   enable_volume_encryption = var.enable_volume_encryption
   volume_size = var.volume_size
   enable_instance_connect = var.enable_instance_connect
+  disable_instance_termination = var.disable_instance_termination
   allow_upload_download = var.allow_upload_download
   management_server = var.management_server
   configuration_template = var.configuration_template
@@ -302,6 +296,7 @@ module "gwlb" {
   gateway_password_hash = var.gateway_password_hash
   gateway_SICKey = var.gateway_SICKey
   gateways_provision_address_type = var.gateways_provision_address_type
+  allocate_public_IP = var.allocate_public_IP
   enable_cloudwatch = var.enable_cloudwatch
 
   // --- Check Point CloudGuard IaaS Security Management Server Configuration ---

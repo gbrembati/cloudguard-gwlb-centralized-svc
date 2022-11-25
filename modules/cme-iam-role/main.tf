@@ -1,9 +1,3 @@
-/*
-provider "aws" {
-  region = var.region
-  access_key = var.access_key
-  secret_key = var.secret_key
-} */
 
 resource "aws_iam_role" "cme_iam_role" {
   assume_role_policy = data.aws_iam_policy_document.cme_role_assume_policy_document.json

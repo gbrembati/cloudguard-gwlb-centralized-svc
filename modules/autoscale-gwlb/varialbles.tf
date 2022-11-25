@@ -1,22 +1,5 @@
 // Module: Check Point CloudGuard Network Auto Scaling Group into an existing VPC
 
-// --- AWS Provider ---
-variable "region" {
-  type = string
-  description = "AWS region"
-  default = ""
-}
-variable "access_key" {
-  type = string
-  description = "AWS access key"
-  default = ""
-}
-variable "secret_key" {
-  type = string
-  description = "AWS secret key"
-  default = ""
-}
-
 // --- Environment ---
 variable "prefix" {
   type = string
@@ -44,6 +27,18 @@ variable "gateways_provision_address_type" {
   description = "Determines if the gateways are provisioned using their private or public address"
   default = "private"
 }
+
+variable "allocate_public_IP" {
+  type = bool
+  description = "Allocate an Elastic IP for security gateway."
+  default = false
+}
+
+resource "null_resource" "invalid_allocation" {
+  // Will fail if var.gateways_provision_address_type is public and var.allocate_public_IP is false
+  count = var.gateways_provision_address_type != "public" ? 0 : var.allocate_public_IP == true ? 0 : "Gateway's selected to be provisioned by public IP, but [allocate_public_IP] parameter is false"
+}
+
 variable "management_server" {
   type = string
   description = "The name that represents the Security Management Server in the CME configuration"

@@ -71,6 +71,11 @@ variable "enable_instance_connect" {
   description = "Enable AWS Instance Connect - Ec2 Instance Connect is not supported with versions prior to R80.40"
   default = false
 }
+variable "disable_instance_termination" {
+  type = bool
+  description = "Prevents an instance from accidental termination"
+  default = false
+}
 variable "instance_tags" {
   type = map(string)
   description = "(Optional) A map of tags as key=value pairs. All tags will be added to the Management EC2 Instance"
@@ -98,7 +103,7 @@ variable "sts_roles" {
 variable "management_version" {
   type = string
   description = "Management version and license"
-  default = "R81-BYOL"
+  default = "R81.10-BYOL"
 }
 module "validate_management_version" {
   source = "../common/version_license"

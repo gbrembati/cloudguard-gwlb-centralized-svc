@@ -2,6 +2,7 @@ locals {
   amis_yaml_regionMap = yamldecode(split("Resources", data.http.amis_yaml_http.body)[0]).Mappings.RegionMap
   amis_yaml_converterMap = yamldecode(split("Resources", data.http.amis_yaml_http.body)[0]).Mappings.ConverterMap
 
+
   //  Variables example:
   //  version_license = "R80.40-PAYG-NGTX"
   //  RESULT:
