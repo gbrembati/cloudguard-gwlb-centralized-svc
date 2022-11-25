@@ -9,14 +9,16 @@ resource "aws_subnet" "gwlbe_subnet1" {
 }
 resource "aws_route_table" "gwlbe_subnet1_rtb" {
   vpc_id = var.vpc_id
-  route{
-    cidr_block = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.nat_gateway1.id
-  }
+
   tags = {
     Name = "rt-net-chkp-gwlbe-1"
     Network = "Private"
   }
+}
+resource "aws_route" "gwlbe_subnet1_rtb_default" {
+  route_table_id            = aws_route_table.gwlbe_subnet1_rtb.id
+  destination_cidr_block    = "0.0.0.0/0"
+  nat_gateway_id            = aws_nat_gateway.nat_gateway1.id
 }
 resource "aws_route_table_association" "gwlbe_subnet1_rtb_assoc" {
   subnet_id      = aws_subnet.gwlbe_subnet1.id
@@ -35,14 +37,16 @@ resource "aws_subnet" "gwlbe_subnet2" {
 }
 resource "aws_route_table" "gwlbe_subnet2_rtb" {
   vpc_id = var.vpc_id
-  route{
-    cidr_block = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.nat_gateway2.id
-  }
+
   tags = {
     Name = "rt-net-chkp-gwlbe-2"
     Network = "Private"
   }
+}
+resource "aws_route" "gwlbe_subnet2_rtb_default" {
+  route_table_id            = aws_route_table.gwlbe_subnet2_rtb.id
+  destination_cidr_block    = "0.0.0.0/0"
+  nat_gateway_id            = aws_nat_gateway.nat_gateway2.id
 }
 resource "aws_route_table_association" "gwlbe_subnet2_rtb_assoc" {
   subnet_id      = aws_subnet.gwlbe_subnet2.id
@@ -63,14 +67,17 @@ resource "aws_subnet" "gwlbe_subnet3" {
 resource "aws_route_table" "gwlbe_subnet3_rtb" {
   count = var.number_of_AZs >= 3 ? 1 :0
   vpc_id = var.vpc_id
-  route{
-    cidr_block = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.nat_gateway3[0].id
-  }
+
   tags = {
     Name = "rt-net-chkp-gwlbe-3"
     Network = "Private"
   }
+}
+resource "aws_route" "gwlbe_subnet3_rtb_default" {
+  count = var.number_of_AZs >= 3 ? 1 :0
+  route_table_id            = aws_route_table.gwlbe_subnet3_rtb[0].id
+  destination_cidr_block    = "0.0.0.0/0"
+  nat_gateway_id            = aws_nat_gateway.nat_gateway3[0].id
 }
 resource "aws_route_table_association" "gwlbe_subnet3_rtb_assoc" {
   count = var.number_of_AZs >= 3 ? 1 :0
@@ -92,15 +99,19 @@ resource "aws_subnet" "gwlbe_subnet4" {
 resource "aws_route_table" "gwlbe_subnet4_rtb" {
   count = var.number_of_AZs >= 4 ? 1 :0
   vpc_id = var.vpc_id
-  route{
-    cidr_block = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.nat_gateway4[0].id
-  }
+
   tags = {
     Name = "rt-net-chkp-gwlbe-4"
     Network = "Private"
   }
 }
+resource "aws_route" "gwlbe_subnet4_rtb_default" {
+  count = var.number_of_AZs >= 4 ? 1 :0
+  route_table_id            = aws_route_table.gwlbe_subnet4_rtb[0].id
+  destination_cidr_block    = "0.0.0.0/0"
+  nat_gateway_id            = aws_nat_gateway.nat_gateway4[0].id
+}
+
 resource "aws_route_table_association" "gwlbe_subnet4_rtb_assoc" {
   count = var.number_of_AZs >= 4 ? 1 :0
   subnet_id      = aws_subnet.gwlbe_subnet4[0].id

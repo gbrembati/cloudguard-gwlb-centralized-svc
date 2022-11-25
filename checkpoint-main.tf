@@ -126,6 +126,22 @@ resource "aws_route" "tgw_attachment1_rtb_classC" {
   transit_gateway_id      = aws_ec2_transit_gateway.tgw-central.id
 }
 
+resource "aws_route" "gwlbe_rt1_classA" {
+  route_table_id          = module.tgw-gwlb.gwlbe_subnet1_rtb
+  destination_cidr_block  = "10.0.0.0/8"
+  transit_gateway_id      = aws_ec2_transit_gateway.tgw-central.id
+}
+resource "aws_route" "gwlbe_rt1_classB" {
+  route_table_id          = module.tgw-gwlb.gwlbe_subnet1_rtb
+  destination_cidr_block  = "172.16.0.0/12"
+  transit_gateway_id      = aws_ec2_transit_gateway.tgw-central.id
+}
+resource "aws_route" "gwlbe_rt1_classC" {
+  route_table_id          = module.tgw-gwlb.gwlbe_subnet1_rtb
+  destination_cidr_block  = "192.168.0.0/16"
+  transit_gateway_id      = aws_ec2_transit_gateway.tgw-central.id
+}
+
 resource "aws_route" "tgw_attachment2_rtb_classA" {
   route_table_id          = module.tgw-gwlb.tgw_subnet2_rtb
   destination_cidr_block  = "10.0.0.0/8"
@@ -138,6 +154,21 @@ resource "aws_route" "tgw_attachment2_rtb_classB" {
 }
 resource "aws_route" "tgw_attachment2_rtb_classC" {
   route_table_id          = module.tgw-gwlb.tgw_subnet2_rtb
+  destination_cidr_block  = "192.168.0.0/16"
+  transit_gateway_id      = aws_ec2_transit_gateway.tgw-central.id
+}
+resource "aws_route" "gwlbe_rt2_classA" {
+  route_table_id          = module.tgw-gwlb.gwlbe_subnet2_rtb
+  destination_cidr_block  = "10.0.0.0/8"
+  transit_gateway_id      = aws_ec2_transit_gateway.tgw-central.id
+}
+resource "aws_route" "gwlbe_rt2_classB" {
+  route_table_id          = module.tgw-gwlb.gwlbe_subnet2_rtb
+  destination_cidr_block  = "172.16.0.0/12"
+  transit_gateway_id      = aws_ec2_transit_gateway.tgw-central.id
+}
+resource "aws_route" "gwlbe_rt2_classC" {
+  route_table_id          = module.tgw-gwlb.gwlbe_subnet2_rtb
   destination_cidr_block  = "192.168.0.0/16"
   transit_gateway_id      = aws_ec2_transit_gateway.tgw-central.id
 }
@@ -154,6 +185,21 @@ resource "aws_route" "tgw_attachment3_rtb_classB" {
 }
 resource "aws_route" "tgw_attachment3_rtb_classC" {
   route_table_id          = module.tgw-gwlb.tgw_subnet3_rtb
+  destination_cidr_block  = "192.168.0.0/16"
+  transit_gateway_id      = aws_ec2_transit_gateway.tgw-central.id
+}
+resource "aws_route" "gwlbe_rt3_classA" {
+  route_table_id          = module.tgw-gwlb.gwlbe_subnet3_rtb
+  destination_cidr_block  = "10.0.0.0/8"
+  transit_gateway_id      = aws_ec2_transit_gateway.tgw-central.id
+}
+resource "aws_route" "gwlbe_rt3_classB" {
+  route_table_id          = module.tgw-gwlb.gwlbe_subnet3_rtb
+  destination_cidr_block  = "172.16.0.0/12"
+  transit_gateway_id      = aws_ec2_transit_gateway.tgw-central.id
+}
+resource "aws_route" "gwlbe_rt3_classC" {
+  route_table_id          = module.tgw-gwlb.gwlbe_subnet3_rtb
   destination_cidr_block  = "192.168.0.0/16"
   transit_gateway_id      = aws_ec2_transit_gateway.tgw-central.id
 }
