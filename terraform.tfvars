@@ -1,7 +1,7 @@
 // --- Provider Settings ---
-region      = "xx-xxxx-x" 
-access_key  = "xxxxxxxxxxxxxxx"
-secret_key  = "xxxxxxxxxxxxxxx"
+region      = "<aws-region>" 
+access_key  = "<aws-access-key>"
+secret_key  = "<aws-secret-key>"
 
 // --- Networking Settings ---
 vpc_cidr = "10.250.0.0/16"
@@ -52,7 +52,7 @@ minimum_group_size    = 3
 maximum_group_size    = 4
 gateway_version       = "R81.20-BYOL"                   // "R80.40-BYOL" | "R81.20-BYOL"
 gateway_password_hash = "<openssl-created-pwd-hash>"    // openssl passwd -6 "password"
-gateway_SICKey        = "CheckpointPOC2022"
+gateway_SICKey        = "<chkp-sic-phrase>"
 enable_cloudwatch     = true
 gateways_provision_address_type = "private"
 
