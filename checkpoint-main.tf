@@ -1,5 +1,6 @@
 module "launch_vpc" {
-  source = "./modules/vpc"
+  source  = "CheckPointSW/cloudguard-network-security/aws//modules/vpc"
+  version = "1.0.10"
 
   vpc_cidr            = var.vpc_cidr
   public_subnets_map  = var.public_subnets_map
