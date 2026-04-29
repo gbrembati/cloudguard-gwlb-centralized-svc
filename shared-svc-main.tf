@@ -166,7 +166,7 @@ resource "aws_route_table_association" "rt-for-trust-shared-svc-b" {
 
 resource "aws_vpc_endpoint" "shared-svc-vpce-rds" {
   vpc_id            = aws_vpc.vpc-shared-svc.id
-  service_name      = "com.amazonaws.eu-west-1.rds"
+  service_name      = "com.amazonaws.${var.region}.rds"
   vpc_endpoint_type = "Interface"
 
   private_dns_enabled = false
@@ -180,7 +180,7 @@ resource "aws_vpc_endpoint" "shared-svc-vpce-rds" {
 }
 resource "aws_vpc_endpoint" "shared-svc-vpce-rds-data" {
   vpc_id            = aws_vpc.vpc-shared-svc.id
-  service_name      = "com.amazonaws.eu-west-1.rds-data"
+  service_name      = "com.amazonaws.${var.region}.rds-data"
   vpc_endpoint_type = "Interface"
 
   private_dns_enabled = false
@@ -195,7 +195,7 @@ resource "aws_vpc_endpoint" "shared-svc-vpce-rds-data" {
 
 resource "aws_vpc_endpoint" "shared-svc-vpce-ec2" {
   vpc_id            = aws_vpc.vpc-shared-svc.id
-  service_name      = "com.amazonaws.eu-west-1.ec2"
+  service_name      = "com.amazonaws.${var.region}.ec2"
   vpc_endpoint_type = "Interface"
 
   private_dns_enabled = false
@@ -210,7 +210,7 @@ resource "aws_vpc_endpoint" "shared-svc-vpce-ec2" {
 
 resource "aws_vpc_endpoint" "shared-svc-vpce-cloudformation" {
   vpc_id            = aws_vpc.vpc-shared-svc.id
-  service_name      = "com.amazonaws.eu-west-1.cloudformation"
+  service_name      = "com.amazonaws.${var.region}.cloudformation"
   vpc_endpoint_type = "Interface"
 
   private_dns_enabled = false
@@ -226,7 +226,7 @@ resource "aws_vpc_endpoint" "shared-svc-vpce-cloudformation" {
 
 resource "aws_vpc_endpoint" "shared-svc-vpce-ecr-api" {
   vpc_id            = aws_vpc.vpc-shared-svc.id
-  service_name      = "com.amazonaws.eu-west-1.ecr.api"
+  service_name      = "com.amazonaws.${var.region}.ecr.api"
   vpc_endpoint_type = "Interface"
 
   private_dns_enabled = false
@@ -240,7 +240,7 @@ resource "aws_vpc_endpoint" "shared-svc-vpce-ecr-api" {
 }
 
 resource "aws_route53_zone" "private-ireland-zone" {
-  name = "eu-west-1.vpce.amazonaws.com"
+  name = "${var.region}.vpce.amazonaws.com"
 
   vpc {
     vpc_id = aws_vpc.vpc-shared-svc.id

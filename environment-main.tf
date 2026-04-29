@@ -54,14 +54,14 @@ resource "aws_main_route_table_association" "rt-to-vpc-spoke" {
 resource "aws_security_group" "nsg-allow-all" {
   count       = length(var.spoke-env)
   name        = "nsg-vpc-${lookup(var.spoke-env, count.index)[0]}"
-  description = "Allow inbound/outbound traffic"
+  description = "Allow RFC1918 inbound and all outbound traffic"
   vpc_id      = aws_vpc.vpc-spoke[count.index].id
 
   ingress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
   }
   egress {
     from_port   = 0
@@ -218,6 +218,20 @@ resource "aws_route_table_association" "rt-to-trust-spoke" {
 }
 
 # Deploy linux test VMs
+data "aws_ami" "amazon_linux" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["al2023-ami-*-x86_64"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
+
 resource "aws_security_group" "nsg-allow-http" {
   count       = length(var.spoke-env)
   name        = "nsg-allow-http-${lookup(var.spoke-env, count.index)[0]}"
@@ -254,7 +268,7 @@ resource "aws_security_group" "nsg-allow-ssh" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.my-pub-ip]
   }
   tags = {
     Name             = "nsg-allow-ssh-${lookup(var.spoke-env, count.index)[0]}"
@@ -263,34 +277,20 @@ resource "aws_security_group" "nsg-allow-ssh" {
   depends_on = [aws_vpc.vpc-spoke]
 }
 
-resource "aws_network_interface" "nic-vm-spoke-linux" {
-  count           = length(var.spoke-env)
-  subnet_id       = aws_subnet.net-untrust-spoke[count.index].id
-  security_groups = [aws_security_group.nsg-allow-http[count.index].id, aws_security_group.nsg-allow-ssh[count.index].id]
-
-  tags = {
-    Name             = "nic-vm-linux-${lookup(var.spoke-env, count.index)[0]}"
-    "Resource Group" = "rg-${lookup(var.spoke-env, count.index)[0]}"
-  }
-  depends_on = [aws_subnet.net-untrust-spoke, aws_security_group.nsg-allow-http, aws_security_group.nsg-allow-ssh]
-}
-
 resource "aws_instance" "vm-spoke-linux" {
   count         = length(var.spoke-env)
-  ami           = "ami-0d71ea30463e0ff8d"
+  ami           = data.aws_ami.amazon_linux.id
   instance_type = "t2.micro"
   key_name      = var.linux-keypair
 
-  network_interface {
-    device_index         = 0
-    network_interface_id = aws_network_interface.nic-vm-spoke-linux[count.index].id
-  }
+  subnet_id              = aws_subnet.net-untrust-spoke[count.index].id
+  vpc_security_group_ids = [aws_security_group.nsg-allow-http[count.index].id, aws_security_group.nsg-allow-ssh[count.index].id]
 
   tags = {
     Name             = "vm-linux-${lookup(var.spoke-env, count.index)[0]}"
     "Resource Group" = "rg-${lookup(var.spoke-env, count.index)[0]}"
   }
-  depends_on = [aws_network_interface.nic-vm-spoke-linux]
+  depends_on = [aws_subnet.net-untrust-spoke, aws_security_group.nsg-allow-http, aws_security_group.nsg-allow-ssh]
 }
 
 # Creation of the TGW and the attachments
