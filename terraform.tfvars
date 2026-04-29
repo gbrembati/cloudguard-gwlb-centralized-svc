@@ -47,10 +47,10 @@ enable_cross_zone_load_balancing = "true"
 
 // --- Check Point CloudGuard IaaS Security Gateways Auto Scaling Group Configuration ---
 gateway_name                           = "<chkp-gwlb-gw-name>"
-gateway_instance_type                  = "c6i.large"
+gateway_instance_type                  = "c6in.large"
 minimum_group_size                     = 3
 maximum_group_size                     = 4
-gateway_version                        = "R81.20-BYOL"                // "R80.40-BYOL" | "R81.20-BYOL"
+gateway_version                        = "R82.10-BYOL"                // "R80.40-BYOL" | "R81.20-BYOL"
 gateway_password_hash                  = "<openssl-created-pwd-hash>" // openssl passwd -6 "password"
 gateway_SICKey                         = "<chkp-sic-phrase>"
 enable_cloudwatch                      = true
@@ -62,7 +62,7 @@ gateway_maintenance_mode_password_hash = ""
 // --- Check Point CloudGuard IaaS Security Management Server Configuration ---
 management_deploy                         = true
 management_instance_type                  = "m6i.xlarge"
-management_version                        = "R81.20-BYOL"                // "R81.10-BYOL" | "R81.20-BYOL"         
+management_version                        = "R82.10-BYOL"                // "R81.10-BYOL" | "R81.20-BYOL"         
 management_password_hash                  = "<openssl-created-pwd-hash>" // openssl passwd -6 "password"
 management_maintenance_mode_password_hash = ""
 gateways_policy                           = "Standard"
