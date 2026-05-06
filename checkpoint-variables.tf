@@ -6,12 +6,12 @@ variable "region" {
   description = "AWS region"
   default     = ""
 }
-variable "access_key" {
+variable "aws-access-key" {
   type        = string
   description = "AWS access key"
   default     = ""
 }
-variable "secret_key" {
+variable "aws-secret-key" {
   type        = string
   description = "AWS secret key"
   default     = ""
@@ -152,7 +152,7 @@ variable "configuration_template" {
 variable "admin_shell" {
   type        = string
   description = "Set the admin shell to enable advanced command line configuration"
-  default     = "/etc/cli.sh"
+  default     = "/bin/bash"
 }
 
 // --- Gateway Load Balancer Configuration ---
