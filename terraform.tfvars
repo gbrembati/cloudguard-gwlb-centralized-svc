@@ -31,28 +31,20 @@ gwlbe_subnet_3_cidr = "10.250.34.0/24"
 gwlbe_subnet_4_cidr = "10.250.44.0/24"
 
 // --- General Settings ---
-key_name                 = "<ec2-keypair-name>"
 enable_volume_encryption = true
 volume_size              = 100
 enable_instance_connect  = false
 allow_upload_download    = true
-management_server        = "<chkp-management-name>"
-configuration_template   = "<chkp-cme-template-name>"
 admin_shell              = "/bin/bash"
 
 // --- Gateway Load Balancer Configuration ---
-gateway_load_balancer_name       = var.gateway_load_balancer_name
-target_group_name                = var.target_group_name
 enable_cross_zone_load_balancing = "true"
 
 // --- Check Point CloudGuard IaaS Security Gateways Auto Scaling Group Configuration ---
-gateway_name                           = "<chkp-gwlb-gw-name>"
 gateway_instance_type                  = "c6in.large"
 minimum_group_size                     = 3
 maximum_group_size                     = 4
 gateway_version                        = "R82.10-BYOL"                // "R80.40-BYOL" | "R81.20-BYOL"
-gateway_password_hash                  = var.gateway_password_hash // openssl passwd -6 "password"
-gateway_SICKey                         = var.gateway_SICKey
 enable_cloudwatch                      = true
 gateways_provision_address_type        = "private"
 allocate_public_IP                     = false
@@ -60,10 +52,9 @@ gateway_bootstrap_script               = ""
 gateway_maintenance_mode_password_hash = ""
 
 // --- Check Point CloudGuard IaaS Security Management Server Configuration ---
-management_deploy                         = true
+management_deploy                         = false
 management_instance_type                  = "m6i.xlarge"
-management_version                        = "R82.10-BYOL"                // "R81.10-BYOL" | "R81.20-BYOL"         
-management_password_hash                  = var.gateway_password_hash   // openssl passwd -6 "password"
+management_version                        = "R82.10-BYOL"                // "R81.10-BYOL" | "R81.20-BYOL"           
 management_maintenance_mode_password_hash = ""
 gateways_policy                           = "Standard"
 gateway_management                        = "Locally managed"
