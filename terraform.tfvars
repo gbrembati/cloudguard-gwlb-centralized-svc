@@ -17,7 +17,7 @@ tgw_subnets_map = {
 }
 subnets_bit_length = 8
 
-availability_zones = ["eu-west-1a", "eu-west-1b", "eu-west-1c"]
+availability_zones = ["eu-west-3a", "eu-west-3b", "eu-west-3c"]
 number_of_AZs      = 3
 
 nat_gw_subnet_1_cidr = "10.250.13.0/24"
