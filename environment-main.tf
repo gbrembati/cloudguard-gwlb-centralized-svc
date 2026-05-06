@@ -82,7 +82,7 @@ resource "aws_subnet" "net-tgw-spoke" {
   count             = length(var.spoke-env)
   vpc_id            = aws_vpc.vpc-spoke[count.index].id
   cidr_block        = lookup(var.spoke-env, count.index)[2]
-  availability_zone = "${var.region}a"
+  availability_zone = "${var.region}${element(["a", "b", "c"], count.index)}"
 
   tags = {
     Name             = "net-${lookup(var.spoke-env, count.index)[0]}-tgw"
@@ -94,7 +94,7 @@ resource "aws_subnet" "net-untrust-spoke" {
   count                   = length(var.spoke-env)
   vpc_id                  = aws_vpc.vpc-spoke[count.index].id
   cidr_block              = lookup(var.spoke-env, count.index)[3]
-  availability_zone       = "${var.region}a"
+  availability_zone       = "${var.region}${element(["a", "b", "c"], count.index)}"
   map_public_ip_on_launch = true
 
   tags = {
@@ -109,7 +109,7 @@ resource "aws_subnet" "net-trust-spoke" {
   count             = length(var.spoke-env)
   vpc_id            = aws_vpc.vpc-spoke[count.index].id
   cidr_block        = lookup(var.spoke-env, count.index)[4]
-  availability_zone = "${var.region}a"
+  availability_zone = "${var.region}${element(["a", "b", "c"], count.index)}"
 
   tags = {
     Name                 = "net-${lookup(var.spoke-env, count.index)[0]}-trust"
@@ -281,7 +281,7 @@ resource "aws_instance" "vm-spoke-linux" {
   count         = length(var.spoke-env)
   ami           = data.aws_ami.amazon_linux.id
   instance_type = "t2.micro"
-  key_name      = var.linux-keypair
+  key_name      = var.key_name
 
   subnet_id              = aws_subnet.net-untrust-spoke[count.index].id
   vpc_security_group_ids = [aws_security_group.nsg-allow-http[count.index].id, aws_security_group.nsg-allow-ssh[count.index].id]

@@ -2,14 +2,14 @@
 // --- Networking Settings ---
 vpc_cidr = "10.250.0.0/16"
 public_subnets_map = {
-  "eu-west-1a" = 1
-  "eu-west-1b" = 2
-  "eu-west-1c" = 3
+  "eu-west-3a" = 1
+  "eu-west-3b" = 2
+  "eu-west-3c" = 3
 }
 tgw_subnets_map = {
-  "eu-west-1a" = 5
-  "eu-west-1b" = 6
-  "eu-west-1c" = 7
+  "eu-west-3a" = 5
+  "eu-west-3b" = 6
+  "eu-west-3c" = 7
 }
 subnets_bit_length = 8
 
