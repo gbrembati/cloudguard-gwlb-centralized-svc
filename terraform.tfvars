@@ -1,7 +1,3 @@
-// --- Provider Settings ---
-region     = "<aws-region>"
-aws-access-key = "<aws-access-key>"
-aws-secret-key = "<aws-secret-key>"
 
 // --- Networking Settings ---
 vpc_cidr = "10.250.0.0/16"
