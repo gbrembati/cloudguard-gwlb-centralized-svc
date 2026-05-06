@@ -70,8 +70,8 @@ The design follows [Check Point's Architecture N°2 — Security VPC + TGW](http
 ```hcl
 // --- Provider Settings ---
 region     = "<aws-region>"
-access_key = "<aws-access-key>"
-secret_key = "<aws-secret-key>"
+aws-access-key = "<aws-access-key>"
+aws-secret-key = "<aws-secret-key>"
 
 // --- Networking Settings ---
 vpc_cidr = "10.250.0.0/16"
@@ -106,7 +106,7 @@ terraform plan
 terraform apply
 ```
 
-> **Tip:** When using Terraform Cloud, credentials (`access_key`, `secret_key`) can be managed as workspace variables instead of in `terraform.tfvars`.
+> **Tip:** When using Terraform Cloud, credentials (`aws-access-key`, `aws-secret-key`) can be managed as workspace variables instead of in `terraform.tfvars`.
 
 ## Project Structure
 

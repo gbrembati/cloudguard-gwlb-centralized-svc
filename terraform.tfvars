@@ -1,7 +1,7 @@
 // --- Provider Settings ---
 region     = "<aws-region>"
-access_key = "<aws-access-key>"
-secret_key = "<aws-secret-key>"
+aws-access-key = "<aws-access-key>"
+aws-secret-key = "<aws-secret-key>"
 
 // --- Networking Settings ---
 vpc_cidr = "10.250.0.0/16"
@@ -41,8 +41,8 @@ configuration_template   = "<chkp-cme-template-name>"
 admin_shell              = "/bin/bash"
 
 // --- Gateway Load Balancer Configuration ---
-gateway_load_balancer_name       = "<chkp-gwlb-svc-name>"
-target_group_name                = "<chkp-gwlb-tg-name>"
+gateway_load_balancer_name       = var.gateway_load_balancer_name
+target_group_name                = var.target_group_name
 enable_cross_zone_load_balancing = "true"
 
 // --- Check Point CloudGuard IaaS Security Gateways Auto Scaling Group Configuration ---
@@ -51,8 +51,8 @@ gateway_instance_type                  = "c6in.large"
 minimum_group_size                     = 3
 maximum_group_size                     = 4
 gateway_version                        = "R82.10-BYOL"                // "R80.40-BYOL" | "R81.20-BYOL"
-gateway_password_hash                  = "<openssl-created-pwd-hash>" // openssl passwd -6 "password"
-gateway_SICKey                         = "<chkp-sic-phrase>"
+gateway_password_hash                  = var.gateway_password_hash // openssl passwd -6 "password"
+gateway_SICKey                         = var.gateway_SICKey
 enable_cloudwatch                      = true
 gateways_provision_address_type        = "private"
 allocate_public_IP                     = false
@@ -63,7 +63,7 @@ gateway_maintenance_mode_password_hash = ""
 management_deploy                         = true
 management_instance_type                  = "m6i.xlarge"
 management_version                        = "R82.10-BYOL"                // "R81.10-BYOL" | "R81.20-BYOL"         
-management_password_hash                  = "<openssl-created-pwd-hash>" // openssl passwd -6 "password"
+management_password_hash                  = var.gateway_password_hash   // openssl passwd -6 "password"
 management_maintenance_mode_password_hash = ""
 gateways_policy                           = "Standard"
 gateway_management                        = "Locally managed"
