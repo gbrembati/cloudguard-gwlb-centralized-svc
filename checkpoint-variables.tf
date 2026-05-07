@@ -155,6 +155,13 @@ variable "admin_shell" {
   default     = "/bin/bash"
 }
 
+// --- CFWaaS Gateway Load Balancer Endpoint (optional) ---
+variable "cfwaas_gwlbe_name" {
+  type        = string
+  description = "VPC Endpoint Service name for a second (CFWaaS) Gateway Load Balancer. One GWLBe will be created per AZ in the existing GWLBe subnets. Leave empty to skip creation."
+  default     = ""
+}
+
 // --- Gateway Load Balancer Configuration ---
 
 variable "gateway_load_balancer_name" {

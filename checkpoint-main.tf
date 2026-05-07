@@ -373,3 +373,35 @@ resource "aws_route" "nat_gw_rt3_classC" {
   destination_cidr_block = "192.168.0.0/16"
   vpc_endpoint_id        = data.aws_vpc_endpoint.gwlb_endpoint3.id
 }
+
+// --- CFWaaS GWLBe endpoints (optional, one per AZ in the existing GWLBe subnets) ---
+// Created only when var.cfwaas_gwlbe_name is set to a non-empty service name.
+
+locals {
+  cfwaas_gwlbe_subnet_cidrs = [
+    var.gwlbe_subnet_1_cidr,
+    var.gwlbe_subnet_2_cidr,
+    var.gwlbe_subnet_3_cidr,
+    var.gwlbe_subnet_4_cidr,
+  ]
+}
+
+data "aws_subnet" "cfwaas_gwlbe_subnet" {
+  count      = var.cfwaas_gwlbe_name != "" ? var.number_of_AZs : 0
+  vpc_id     = module.launch_vpc.vpc_id
+  cidr_block = local.cfwaas_gwlbe_subnet_cidrs[count.index]
+  depends_on = [module.tgw-gwlb]
+}
+
+resource "aws_vpc_endpoint" "cfwaas_gwlbe" {
+  count             = var.cfwaas_gwlbe_name != "" ? var.number_of_AZs : 0
+  vpc_id            = module.launch_vpc.vpc_id
+  service_name      = var.cfwaas_gwlbe_name
+  vpc_endpoint_type = "GatewayLoadBalancer"
+  subnet_ids        = [data.aws_subnet.cfwaas_gwlbe_subnet[count.index].id]
+
+  tags = {
+    Name = "cfwaas-gwlbe-${count.index + 1}"
+  }
+  depends_on = [module.tgw-gwlb, data.aws_subnet.cfwaas_gwlbe_subnet]
+}

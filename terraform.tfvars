@@ -33,6 +33,10 @@ enable_instance_connect  = false
 allow_upload_download    = true
 admin_shell              = "/bin/bash"
 
+// --- CFWaaS GWLBe (optional) ---
+// Uncomment and set to the VPC Endpoint Service name to create one GWLBe per AZ
+// cfwaas_gwlbe_name = "com.amazonaws.vpce.<region>.vpce-svc-XXXXXXXXXXXXXXXXX"
+
 // --- Gateway Load Balancer Configuration ---
 enable_cross_zone_load_balancing = "true"
 
