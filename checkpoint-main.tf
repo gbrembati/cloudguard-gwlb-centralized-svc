@@ -304,7 +304,6 @@ data "aws_subnet" "cfwaas_gwlbe_subnet" {
   count      = var.cfwaas_gwlbe_name != "" ? var.number_of_AZs : 0
   vpc_id     = module.launch_vpc.vpc_id
   cidr_block = local.cfwaas_gwlbe_subnet_cidrs[count.index]
-  depends_on = [module.tgw-gwlb]
 }
 
 resource "aws_vpc_endpoint" "cfwaas_gwlbe" {

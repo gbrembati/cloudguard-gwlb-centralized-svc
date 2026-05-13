@@ -245,6 +245,10 @@ resource "aws_route53_zone" "private-ireland-zone" {
   vpc {
     vpc_id = aws_vpc.vpc-shared-svc.id
   }
+
+  lifecycle {
+    ignore_changes = [vpc]
+  }
 }
 
 resource "aws_route53_record" "host-rds-endpoint" {
