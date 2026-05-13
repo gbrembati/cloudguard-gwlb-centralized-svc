@@ -284,7 +284,7 @@ resource "aws_instance" "vm-spoke-linux" {
   key_name      = var.key_name
 
   subnet_id              = aws_subnet.net-untrust-spoke[count.index].id
-  vpc_security_group_ids = [aws_security_group.nsg-allow-http[count.index].id, aws_security_group.nsg-allow-ssh[count.index].id]
+  vpc_security_group_ids = [aws_security_group.nsg-allow-all[count.index].id, aws_security_group.nsg-allow-http[count.index].id, aws_security_group.nsg-allow-ssh[count.index].id]
 
   tags = {
     Name             = "vm-linux-${lookup(var.spoke-env, count.index)[0]}"

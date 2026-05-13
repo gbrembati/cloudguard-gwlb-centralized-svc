@@ -41,10 +41,10 @@ admin_shell              = "/bin/bash"
 enable_cross_zone_load_balancing = "true"
 
 // --- Check Point CloudGuard IaaS Security Gateways Auto Scaling Group Configuration ---
-gateway_instance_type                  = "c6in.large"
+gateway_instance_type                  = "c6in.xlarge"
 minimum_group_size                     = 3
 maximum_group_size                     = 4
-gateway_version                        = "R82.10-BYOL"                // "R80.40-BYOL" | "R81.20-BYOL"
+gateway_version                        = "R82-BYOL"                // "R80.40-BYOL" | "R81.20-BYOL"
 enable_cloudwatch                      = true
 gateways_provision_address_type        = "public"
 allocate_public_IP                     = true
@@ -54,7 +54,7 @@ gateway_maintenance_mode_password_hash = ""
 // --- Check Point CloudGuard IaaS Security Management Server Configuration ---
 management_deploy                         = false
 management_instance_type                  = "m6i.xlarge"
-management_version                        = "R82.10-BYOL"                // "R81.10-BYOL" | "R81.20-BYOL"           
+management_version                        = "R82-BYOL"                // "R81.10-BYOL" | "R81.20-BYOL"           
 management_maintenance_mode_password_hash = ""
 gateways_policy                           = "Standard"
 gateway_management                        = "Locally managed"
