@@ -123,7 +123,6 @@ data "aws_route_tables" "gwlbe_subnet1_rtb" {
     name   = "tag:Name"
     values = ["GWLBe Subnet 1 Route Table"]
   }
-  depends_on = [module.tgw-gwlb]
 }
 
 data "aws_route_tables" "gwlbe_subnet2_rtb" {
@@ -132,7 +131,6 @@ data "aws_route_tables" "gwlbe_subnet2_rtb" {
     name   = "tag:Name"
     values = ["GWLBe Subnet 2 Route Table"]
   }
-  depends_on = [module.tgw-gwlb]
 }
 
 data "aws_route_tables" "gwlbe_subnet3_rtb" {
@@ -141,7 +139,6 @@ data "aws_route_tables" "gwlbe_subnet3_rtb" {
     name   = "tag:Name"
     values = ["GWLBe Subnet 3 Route Table"]
   }
-  depends_on = [module.tgw-gwlb]
 }
 
 data "aws_route_tables" "nat_gw_subnet1_rtb" {
@@ -150,7 +147,6 @@ data "aws_route_tables" "nat_gw_subnet1_rtb" {
     name   = "tag:Name"
     values = ["NAT Subnet 1 Route Table"]
   }
-  depends_on = [module.tgw-gwlb]
 }
 
 data "aws_route_tables" "nat_gw_subnet2_rtb" {
@@ -159,7 +155,6 @@ data "aws_route_tables" "nat_gw_subnet2_rtb" {
     name   = "tag:Name"
     values = ["NAT Subnet 2 Route Table"]
   }
-  depends_on = [module.tgw-gwlb]
 }
 
 data "aws_route_tables" "nat_gw_subnet3_rtb" {
@@ -168,7 +163,6 @@ data "aws_route_tables" "nat_gw_subnet3_rtb" {
     name   = "tag:Name"
     values = ["NAT Subnet 3 Route Table"]
   }
-  depends_on = [module.tgw-gwlb]
 }
 
 data "aws_vpc_endpoint" "gwlb_endpoint1" {
@@ -176,7 +170,6 @@ data "aws_vpc_endpoint" "gwlb_endpoint1" {
   tags = {
     Name = "gwlb_endpoint1"
   }
-  depends_on = [module.tgw-gwlb]
 }
 
 data "aws_vpc_endpoint" "gwlb_endpoint2" {
@@ -184,7 +177,6 @@ data "aws_vpc_endpoint" "gwlb_endpoint2" {
   tags = {
     Name = "gwlb_endpoint2"
   }
-  depends_on = [module.tgw-gwlb]
 }
 
 data "aws_vpc_endpoint" "gwlb_endpoint3" {
@@ -192,55 +184,54 @@ data "aws_vpc_endpoint" "gwlb_endpoint3" {
   tags = {
     Name = "gwlb_endpoint3"
   }
-  depends_on = [module.tgw-gwlb]
 }
 
 // --- GWLBe subnet routes: RFC1918 → TGW ---
 
 resource "aws_route" "gwlbe_rt1_classA" {
-  route_table_id         = data.aws_route_tables.gwlbe_subnet1_rtb.ids[0]
+  route_table_id         = one(data.aws_route_tables.gwlbe_subnet1_rtb.ids)
   destination_cidr_block = "10.0.0.0/8"
   transit_gateway_id     = aws_ec2_transit_gateway.tgw-central.id
 }
 resource "aws_route" "gwlbe_rt1_classB" {
-  route_table_id         = data.aws_route_tables.gwlbe_subnet1_rtb.ids[0]
+  route_table_id         = one(data.aws_route_tables.gwlbe_subnet1_rtb.ids)
   destination_cidr_block = "172.16.0.0/12"
   transit_gateway_id     = aws_ec2_transit_gateway.tgw-central.id
 }
 resource "aws_route" "gwlbe_rt1_classC" {
-  route_table_id         = data.aws_route_tables.gwlbe_subnet1_rtb.ids[0]
+  route_table_id         = one(data.aws_route_tables.gwlbe_subnet1_rtb.ids)
   destination_cidr_block = "192.168.0.0/16"
   transit_gateway_id     = aws_ec2_transit_gateway.tgw-central.id
 }
 
 resource "aws_route" "gwlbe_rt2_classA" {
-  route_table_id         = data.aws_route_tables.gwlbe_subnet2_rtb.ids[0]
+  route_table_id         = one(data.aws_route_tables.gwlbe_subnet2_rtb.ids)
   destination_cidr_block = "10.0.0.0/8"
   transit_gateway_id     = aws_ec2_transit_gateway.tgw-central.id
 }
 resource "aws_route" "gwlbe_rt2_classB" {
-  route_table_id         = data.aws_route_tables.gwlbe_subnet2_rtb.ids[0]
+  route_table_id         = one(data.aws_route_tables.gwlbe_subnet2_rtb.ids)
   destination_cidr_block = "172.16.0.0/12"
   transit_gateway_id     = aws_ec2_transit_gateway.tgw-central.id
 }
 resource "aws_route" "gwlbe_rt2_classC" {
-  route_table_id         = data.aws_route_tables.gwlbe_subnet2_rtb.ids[0]
+  route_table_id         = one(data.aws_route_tables.gwlbe_subnet2_rtb.ids)
   destination_cidr_block = "192.168.0.0/16"
   transit_gateway_id     = aws_ec2_transit_gateway.tgw-central.id
 }
 
 resource "aws_route" "gwlbe_rt3_classA" {
-  route_table_id         = data.aws_route_tables.gwlbe_subnet3_rtb.ids[0]
+  route_table_id         = one(data.aws_route_tables.gwlbe_subnet3_rtb.ids)
   destination_cidr_block = "10.0.0.0/8"
   transit_gateway_id     = aws_ec2_transit_gateway.tgw-central.id
 }
 resource "aws_route" "gwlbe_rt3_classB" {
-  route_table_id         = data.aws_route_tables.gwlbe_subnet3_rtb.ids[0]
+  route_table_id         = one(data.aws_route_tables.gwlbe_subnet3_rtb.ids)
   destination_cidr_block = "172.16.0.0/12"
   transit_gateway_id     = aws_ec2_transit_gateway.tgw-central.id
 }
 resource "aws_route" "gwlbe_rt3_classC" {
-  route_table_id         = data.aws_route_tables.gwlbe_subnet3_rtb.ids[0]
+  route_table_id         = one(data.aws_route_tables.gwlbe_subnet3_rtb.ids)
   destination_cidr_block = "192.168.0.0/16"
   transit_gateway_id     = aws_ec2_transit_gateway.tgw-central.id
 }
@@ -250,49 +241,49 @@ resource "aws_route" "gwlbe_rt3_classC" {
 // The internal module had RFC1918 → GWLB endpoint inline routes for E-W inspection.
 
 resource "aws_route" "nat_gw_rt1_classA" {
-  route_table_id         = data.aws_route_tables.nat_gw_subnet1_rtb.ids[0]
+  route_table_id         = one(data.aws_route_tables.nat_gw_subnet1_rtb.ids)
   destination_cidr_block = "10.0.0.0/8"
   vpc_endpoint_id        = data.aws_vpc_endpoint.gwlb_endpoint1.id
 }
 resource "aws_route" "nat_gw_rt1_classB" {
-  route_table_id         = data.aws_route_tables.nat_gw_subnet1_rtb.ids[0]
+  route_table_id         = one(data.aws_route_tables.nat_gw_subnet1_rtb.ids)
   destination_cidr_block = "172.16.0.0/12"
   vpc_endpoint_id        = data.aws_vpc_endpoint.gwlb_endpoint1.id
 }
 resource "aws_route" "nat_gw_rt1_classC" {
-  route_table_id         = data.aws_route_tables.nat_gw_subnet1_rtb.ids[0]
+  route_table_id         = one(data.aws_route_tables.nat_gw_subnet1_rtb.ids)
   destination_cidr_block = "192.168.0.0/16"
   vpc_endpoint_id        = data.aws_vpc_endpoint.gwlb_endpoint1.id
 }
 
 resource "aws_route" "nat_gw_rt2_classA" {
-  route_table_id         = data.aws_route_tables.nat_gw_subnet2_rtb.ids[0]
+  route_table_id         = one(data.aws_route_tables.nat_gw_subnet2_rtb.ids)
   destination_cidr_block = "10.0.0.0/8"
   vpc_endpoint_id        = data.aws_vpc_endpoint.gwlb_endpoint2.id
 }
 resource "aws_route" "nat_gw_rt2_classB" {
-  route_table_id         = data.aws_route_tables.nat_gw_subnet2_rtb.ids[0]
+  route_table_id         = one(data.aws_route_tables.nat_gw_subnet2_rtb.ids)
   destination_cidr_block = "172.16.0.0/12"
   vpc_endpoint_id        = data.aws_vpc_endpoint.gwlb_endpoint2.id
 }
 resource "aws_route" "nat_gw_rt2_classC" {
-  route_table_id         = data.aws_route_tables.nat_gw_subnet2_rtb.ids[0]
+  route_table_id         = one(data.aws_route_tables.nat_gw_subnet2_rtb.ids)
   destination_cidr_block = "192.168.0.0/16"
   vpc_endpoint_id        = data.aws_vpc_endpoint.gwlb_endpoint2.id
 }
 
 resource "aws_route" "nat_gw_rt3_classA" {
-  route_table_id         = data.aws_route_tables.nat_gw_subnet3_rtb.ids[0]
+  route_table_id         = one(data.aws_route_tables.nat_gw_subnet3_rtb.ids)
   destination_cidr_block = "10.0.0.0/8"
   vpc_endpoint_id        = data.aws_vpc_endpoint.gwlb_endpoint3.id
 }
 resource "aws_route" "nat_gw_rt3_classB" {
-  route_table_id         = data.aws_route_tables.nat_gw_subnet3_rtb.ids[0]
+  route_table_id         = one(data.aws_route_tables.nat_gw_subnet3_rtb.ids)
   destination_cidr_block = "172.16.0.0/12"
   vpc_endpoint_id        = data.aws_vpc_endpoint.gwlb_endpoint3.id
 }
 resource "aws_route" "nat_gw_rt3_classC" {
-  route_table_id         = data.aws_route_tables.nat_gw_subnet3_rtb.ids[0]
+  route_table_id         = one(data.aws_route_tables.nat_gw_subnet3_rtb.ids)
   destination_cidr_block = "192.168.0.0/16"
   vpc_endpoint_id        = data.aws_vpc_endpoint.gwlb_endpoint3.id
 }
