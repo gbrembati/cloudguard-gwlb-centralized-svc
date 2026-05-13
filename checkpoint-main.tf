@@ -117,33 +117,6 @@ module "tgw-gwlb" {
 // --- Data sources to look up route table and endpoint IDs created by the public module ---
 // The public tgw_gwlb module does not expose these as outputs, so we fetch them by tag Name.
 
-data "aws_route_tables" "tgw_attachment_subnet1_rtb" {
-  vpc_id = module.launch_vpc.vpc_id
-  filter {
-    name   = "tag:Name"
-    values = ["TGW Attachment Subnet 1 Route Table"]
-  }
-  depends_on = [module.tgw-gwlb]
-}
-
-data "aws_route_tables" "tgw_attachment_subnet2_rtb" {
-  vpc_id = module.launch_vpc.vpc_id
-  filter {
-    name   = "tag:Name"
-    values = ["TGW Attachment Subnet 2 Route Table"]
-  }
-  depends_on = [module.tgw-gwlb]
-}
-
-data "aws_route_tables" "tgw_attachment_subnet3_rtb" {
-  vpc_id = module.launch_vpc.vpc_id
-  filter {
-    name   = "tag:Name"
-    values = ["TGW Attachment Subnet 3 Route Table"]
-  }
-  depends_on = [module.tgw-gwlb]
-}
-
 data "aws_route_tables" "gwlbe_subnet1_rtb" {
   vpc_id = module.launch_vpc.vpc_id
   filter {
@@ -220,56 +193,6 @@ data "aws_vpc_endpoint" "gwlb_endpoint3" {
     Name = "gwlb_endpoint3"
   }
   depends_on = [module.tgw-gwlb]
-}
-
-// --- TGW Attachment subnet routes: RFC1918 → TGW ---
-
-resource "aws_route" "tgw_attachment1_rtb_classA" {
-  route_table_id         = data.aws_route_tables.tgw_attachment_subnet1_rtb.ids[0]
-  destination_cidr_block = "10.0.0.0/8"
-  transit_gateway_id     = aws_ec2_transit_gateway.tgw-central.id
-}
-resource "aws_route" "tgw_attachment1_rtb_classB" {
-  route_table_id         = data.aws_route_tables.tgw_attachment_subnet1_rtb.ids[0]
-  destination_cidr_block = "172.16.0.0/12"
-  transit_gateway_id     = aws_ec2_transit_gateway.tgw-central.id
-}
-resource "aws_route" "tgw_attachment1_rtb_classC" {
-  route_table_id         = data.aws_route_tables.tgw_attachment_subnet1_rtb.ids[0]
-  destination_cidr_block = "192.168.0.0/16"
-  transit_gateway_id     = aws_ec2_transit_gateway.tgw-central.id
-}
-
-resource "aws_route" "tgw_attachment2_rtb_classA" {
-  route_table_id         = data.aws_route_tables.tgw_attachment_subnet2_rtb.ids[0]
-  destination_cidr_block = "10.0.0.0/8"
-  transit_gateway_id     = aws_ec2_transit_gateway.tgw-central.id
-}
-resource "aws_route" "tgw_attachment2_rtb_classB" {
-  route_table_id         = data.aws_route_tables.tgw_attachment_subnet2_rtb.ids[0]
-  destination_cidr_block = "172.16.0.0/12"
-  transit_gateway_id     = aws_ec2_transit_gateway.tgw-central.id
-}
-resource "aws_route" "tgw_attachment2_rtb_classC" {
-  route_table_id         = data.aws_route_tables.tgw_attachment_subnet2_rtb.ids[0]
-  destination_cidr_block = "192.168.0.0/16"
-  transit_gateway_id     = aws_ec2_transit_gateway.tgw-central.id
-}
-
-resource "aws_route" "tgw_attachment3_rtb_classA" {
-  route_table_id         = data.aws_route_tables.tgw_attachment_subnet3_rtb.ids[0]
-  destination_cidr_block = "10.0.0.0/8"
-  transit_gateway_id     = aws_ec2_transit_gateway.tgw-central.id
-}
-resource "aws_route" "tgw_attachment3_rtb_classB" {
-  route_table_id         = data.aws_route_tables.tgw_attachment_subnet3_rtb.ids[0]
-  destination_cidr_block = "172.16.0.0/12"
-  transit_gateway_id     = aws_ec2_transit_gateway.tgw-central.id
-}
-resource "aws_route" "tgw_attachment3_rtb_classC" {
-  route_table_id         = data.aws_route_tables.tgw_attachment_subnet3_rtb.ids[0]
-  destination_cidr_block = "192.168.0.0/16"
-  transit_gateway_id     = aws_ec2_transit_gateway.tgw-central.id
 }
 
 // --- GWLBe subnet routes: RFC1918 → TGW ---
