@@ -123,6 +123,7 @@ data "aws_route_tables" "gwlbe_subnet1_rtb" {
     name   = "tag:Name"
     values = ["GWLBe Subnet 1 Route Table"]
   }
+  depends_on = [module.tgw-gwlb]
 }
 
 data "aws_route_tables" "gwlbe_subnet2_rtb" {
@@ -131,6 +132,7 @@ data "aws_route_tables" "gwlbe_subnet2_rtb" {
     name   = "tag:Name"
     values = ["GWLBe Subnet 2 Route Table"]
   }
+  depends_on = [module.tgw-gwlb]
 }
 
 data "aws_route_tables" "gwlbe_subnet3_rtb" {
@@ -139,6 +141,7 @@ data "aws_route_tables" "gwlbe_subnet3_rtb" {
     name   = "tag:Name"
     values = ["GWLBe Subnet 3 Route Table"]
   }
+  depends_on = [module.tgw-gwlb]
 }
 
 data "aws_route_tables" "nat_gw_subnet1_rtb" {
@@ -147,6 +150,7 @@ data "aws_route_tables" "nat_gw_subnet1_rtb" {
     name   = "tag:Name"
     values = ["NAT Subnet 1 Route Table"]
   }
+  depends_on = [module.tgw-gwlb]
 }
 
 data "aws_route_tables" "nat_gw_subnet2_rtb" {
@@ -155,6 +159,7 @@ data "aws_route_tables" "nat_gw_subnet2_rtb" {
     name   = "tag:Name"
     values = ["NAT Subnet 2 Route Table"]
   }
+  depends_on = [module.tgw-gwlb]
 }
 
 data "aws_route_tables" "nat_gw_subnet3_rtb" {
@@ -163,6 +168,7 @@ data "aws_route_tables" "nat_gw_subnet3_rtb" {
     name   = "tag:Name"
     values = ["NAT Subnet 3 Route Table"]
   }
+  depends_on = [module.tgw-gwlb]
 }
 
 data "aws_vpc_endpoint" "gwlb_endpoint1" {
@@ -170,6 +176,7 @@ data "aws_vpc_endpoint" "gwlb_endpoint1" {
   tags = {
     Name = "gwlb_endpoint1"
   }
+  depends_on = [module.tgw-gwlb]
 }
 
 data "aws_vpc_endpoint" "gwlb_endpoint2" {
@@ -177,6 +184,7 @@ data "aws_vpc_endpoint" "gwlb_endpoint2" {
   tags = {
     Name = "gwlb_endpoint2"
   }
+  depends_on = [module.tgw-gwlb]
 }
 
 data "aws_vpc_endpoint" "gwlb_endpoint3" {
@@ -184,6 +192,7 @@ data "aws_vpc_endpoint" "gwlb_endpoint3" {
   tags = {
     Name = "gwlb_endpoint3"
   }
+  depends_on = [module.tgw-gwlb]
 }
 
 // --- GWLBe subnet routes: RFC1918 → TGW ---
@@ -304,6 +313,7 @@ data "aws_subnet" "cfwaas_gwlbe_subnet" {
   count      = var.cfwaas_gwlbe_name != "" ? var.number_of_AZs : 0
   vpc_id     = module.launch_vpc.vpc_id
   cidr_block = local.cfwaas_gwlbe_subnet_cidrs[count.index]
+  depends_on = [module.tgw-gwlb]
 }
 
 resource "aws_vpc_endpoint" "cfwaas_gwlbe" {
