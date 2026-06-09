@@ -218,13 +218,13 @@ resource "aws_route_table_association" "rt-to-trust-spoke" {
 }
 
 # Deploy linux test VMs
-data "aws_ami" "amazon_linux" {
+data "aws_ami" "ubuntu" {
   most_recent = true
-  owners      = ["amazon"]
+  owners      = ["099720109477"]
 
   filter {
     name   = "name"
-    values = ["al2023-ami-*-x86_64"]
+    values = ["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"]
   }
   filter {
     name   = "virtualization-type"
@@ -279,7 +279,7 @@ resource "aws_security_group" "nsg-allow-ssh" {
 
 resource "aws_instance" "vm-spoke-linux" {
   count         = length(var.spoke-env)
-  ami           = data.aws_ami.amazon_linux.id
+  ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   key_name      = var.key_name
 
