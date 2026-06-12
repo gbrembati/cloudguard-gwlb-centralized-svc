@@ -8,7 +8,7 @@ Using the included migration script, you can seamlessly migrate and redirect you
 
 ## Architecture Overview
 
-![Architectural Design](/zimages/gwlb-centralized-design.jpg)
+![Architectural Design](/zimages/IaaS-and-CFWaaS-design.png)
 
 The design follows [Check Point's Architecture N°2 — Security VPC + TGW](https://supportcenter.checkpoint.com/supportcenter/portal?eventSubmit_doGoviewsolutiondetails=&solutionid=sk174447&partition=Basic&product=CloudGuard#Security%20VPC%20+%20TGW) pattern.
 
