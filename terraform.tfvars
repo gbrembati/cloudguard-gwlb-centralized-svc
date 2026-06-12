@@ -41,7 +41,7 @@ admin_shell              = "/bin/bash"
 enable_cross_zone_load_balancing = "true"
 
 // --- Check Point CloudGuard IaaS Security Gateways Auto Scaling Group Configuration ---
-gateway_instance_type                  = "c6in.large"
+gateway_instance_type                  = "c6in.xlarge"
 minimum_group_size                     = 3
 maximum_group_size                     = 4
 gateway_version                        = "R82-BYOL"                // "R80.40-BYOL" | "R81.20-BYOL"
