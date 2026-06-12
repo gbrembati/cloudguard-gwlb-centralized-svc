@@ -31,4 +31,5 @@ override.tf.json
 .terraformrc
 terraform.rc
 *.sh
+!replace-routes-script.sh
 *.pem
